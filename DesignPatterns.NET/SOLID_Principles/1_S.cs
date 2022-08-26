@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns.NET.SOLID_Principles
 {
+    //Single Responsibility Principle
     internal class _1_S
     {
         public class Journal

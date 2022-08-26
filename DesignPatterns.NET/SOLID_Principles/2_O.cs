@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DesignPatterns.NET.SOLID_Principles
 {
+    //Open-Closed Princliple
     internal class _2_O
     {
         public enum Color
