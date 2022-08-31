@@ -4,10 +4,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//You are asked to implement the Builder design pattern for rendering simple chunks of code.
+
+//Sample use of the builder you are asked to create:
+
+//var cb = new CodeBuilder("Person").AddField("Name", "string").AddField("Age", "int");
+//Console.WriteLine(cb);
+//The expected output of the above code is:
+
+//public class Person
+//{
+//    public string Name;
+//    public int Age;
+//}
+//Please observe the same placement of curly braces and use two-space indentation.
+
 namespace DesignPatterns.NET.Builder
 {
-    internal class Builder_1
+    internal class BuilderCodingExercise
     {
+
+
         public class HtmlElement
         {
             public string Name, Text;
@@ -25,16 +42,6 @@ namespace DesignPatterns.NET.Builder
                 Text = text ?? throw new ArgumentNullException(paramName: nameof(text));
             }
 
-            public override bool Equals(object obj)
-            {
-                return base.Equals(obj);
-            }
-
-            public override int GetHashCode()
-            {
-                return base.GetHashCode();
-            }
-
             public override string ToString()
             {
                 return ToStringImpl(0);
@@ -44,34 +51,42 @@ namespace DesignPatterns.NET.Builder
             {
                 var sb = new StringBuilder();
                 var i = new string(' ', indentSize * indent);
-                sb.AppendLine($"{i} <{Name}>");
-                if (!string.IsNullOrEmpty(Text))
+
+
+                sb.Append($"{i}public {Text ?? "class"} {Name}");
+                if (string.IsNullOrEmpty(Text))
                 {
-                    sb.Append(new string(' ', indentSize * (indent + 1)));
-                    sb.AppendLine(Text);
+                    sb.AppendLine("").AppendLine("{");
                 }
+                else
+                    sb.AppendLine(";");
+
+
                 foreach (var item in Element)
                 {
                     sb.Append(item.ToStringImpl(indent + 1));
                 }
-                sb.AppendLine($"{i} </{Name}>");
+
+                if (string.IsNullOrEmpty(Text))
+                    sb.AppendLine("}");
+
                 return sb.ToString();
             }
 
         }
 
-        public class HtmlBuilder
+        public class CodeBuilder
         {
             private readonly string rootName;
             HtmlElement root = new HtmlElement();
 
-            public HtmlBuilder(string rootName)
+            public CodeBuilder(string rootName)
             {
                 this.rootName = rootName;
                 root.Name = rootName;
             }
 
-            public HtmlBuilder AddChild(string childName, string childText)
+            public CodeBuilder AddField(string childName, string childText)
             {
                 var e = new HtmlElement(childName, childText);
                 root.Element.Add(e);
@@ -89,7 +104,6 @@ namespace DesignPatterns.NET.Builder
                 root = new HtmlElement
                 {
                     Name = rootName
-
                 };
             }
 
@@ -99,28 +113,8 @@ namespace DesignPatterns.NET.Builder
 
         public static void Drive()
         {
-            var hello = "hello";
-            var sb = new StringBuilder();
-            sb.AppendLine("<p>");
-            sb.AppendLine(hello);
-            sb.AppendLine("</p>");
-            Console.WriteLine(sb);
-
-
-            var words = new[] { "hello", "world" };
-            sb.Clear();
-
-            sb.Append("<ul>");
-            foreach (var item in words)
-            {
-                sb.AppendFormat("<li>{0}</li>", item);
-
-            }
-            sb.Append("</ul>");
-            Console.WriteLine(sb);
-
-            var builder = new HtmlBuilder("ul");
-            builder.AddChild("li", "hello").AddChild("li", "world");    //  Fluent Builder
+            var builder = new CodeBuilder("Person");
+            builder.AddField("Name", "string").AddField("Age", "int");    //  Fluent Builder
             Console.WriteLine(
                 builder.ToString());
 
