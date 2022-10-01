@@ -138,7 +138,6 @@ namespace DesignPatterns.NET.Factories
 
         public static void Drive()
         {
-
             var machine = new HotDrinkMachine();
             var drink = machine.MakeDrink();
 
