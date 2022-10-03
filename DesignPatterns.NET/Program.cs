@@ -1,5 +1,5 @@
 ﻿using System;
-
+using static DesignPatterns.NET.Program;
 
 namespace DesignPatterns.NET
 {
@@ -9,6 +9,7 @@ namespace DesignPatterns.NET
 
         static void Main(string[] args)
         {
+
 
 
 
