@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+
 
 namespace DesignPatterns.NET
 {
-    internal class Program
+
+    public class Program
     {
 
         static void Main(string[] args)
