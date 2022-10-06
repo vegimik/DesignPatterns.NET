@@ -97,7 +97,7 @@ namespace DesignPatterns.NET._5._Singleton
         }
 
 
-        public static void Main(string[] args)
+        public static void Drive()
         {
             var house = new Building();
 
