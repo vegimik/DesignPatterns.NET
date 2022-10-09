@@ -1,0 +1,2 @@
+﻿
+StringBuilder is sealed because it assembles strings, e.g. there should never be a reason to inherit from it because any use should be limited in scope. StringBuilder is not a replacement for string and should never be used that way. The goal of the class was to have a way of easily handling any operations that required mutable strings without performance penalty. As such There is no way inheriting from StringBuilder would provide any utility and would create possible security issues as the class deals with mutable strings.
