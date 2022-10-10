@@ -13,12 +13,12 @@ using System.Text;
 
 namespace DesignPatterns.NET
 {
-
     public class Program
     {
 
         static void Main(string[] args)
         {
+            _8_DecoratorDependencyinjection.Drive();
 
         }
 
