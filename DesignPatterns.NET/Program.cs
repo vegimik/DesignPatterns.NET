@@ -3,6 +3,7 @@ using Autofac.Core;
 using Autofac.Features.Metadata;
 using DesignPatterns.NET._10._Façade;
 using DesignPatterns.NET._12._Proxy;
+using DesignPatterns.NET._13._ChainOfResponsibility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,9 +16,10 @@ namespace DesignPatterns.NET
     public class Program
     {
 
+
         public static void Main(string[] args)
         {
-            _8_BitFragging.Drive();
+
 
         }
 
