@@ -77,11 +77,23 @@ namespace DesignPatterns.NET._13._ChainOfResponsibility
 
             public Goblin(Game game) : base(game, 1, 1)
             {
+#if (DEBUG)               
+                // When you debug you will see thats look like you are calling the override method, very excited.
+                var defense = Defense;
+#endif
+
+
             }
 
             protected Goblin(Game game, int baseAttack, int baseDefense) : base(game,
               baseAttack, baseDefense)
             {
+#if (DEBUG)
+                // When you debug you will see thats look like you are calling the override method, very excited.
+                var defense = Defense;
+                var attack = Attack;
+#endif
+
             }
         }
 

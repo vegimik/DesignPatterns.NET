@@ -1,20 +1,14 @@
-﻿using Autofac;
-using Autofac.Core;
-using Autofac.Features.Metadata;
-using DesignPatterns.NET._14._Command;
+﻿using NUnit.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Action = DesignPatterns.NET.Program.Command.Action;
+using System.Threading.Tasks;
 
-namespace DesignPatterns.NET
+namespace DesignPatterns.NET._14._Command
 {
-
-    public class Program
+    internal class CommandCodingExercise
     {
-
         public class Command
         {
             public enum Action
@@ -26,6 +20,10 @@ namespace DesignPatterns.NET
             public Action TheAction;
             public int Amount;
             public bool Success;
+            public Command()
+            {
+
+            }
             public Command(Action theAction, int amount)
             {
                 TheAction = theAction;
@@ -72,7 +70,7 @@ namespace DesignPatterns.NET
 
 
 
-        public static void Main(string[] args)
+        public static void Drive()
         {
             var account = new Account(0);
             var cmd = new Command(Command.Action.Deposit, 1000);
@@ -81,6 +79,34 @@ namespace DesignPatterns.NET
         }
 
 
+        [TestFixture]
+        public class CommandCodingExercise_Suit
+        {
+            [Test]
+            public void Test()
+            {
+                var a = new Account();
+
+                var command = new Command { Amount = 100, TheAction = Command.Action.Deposit };
+                a.Process(command);
+
+                Assert.That(a.Balance, Is.EqualTo(100));
+                Assert.IsTrue(command.Success);
+
+                command = new Command { Amount = 50, TheAction = Command.Action.Withdraw };
+                a.Process(command);
+
+                Assert.That(a.Balance, Is.EqualTo(50));
+                Assert.IsTrue(command.Success);
+
+                command = new Command { Amount = 150, TheAction = Command.Action.Withdraw };
+                a.Process(command);
+
+                Assert.That(a.Balance, Is.EqualTo(50));
+                Assert.IsFalse(command.Success);
+
+            }
+        }
 
     }
 }
