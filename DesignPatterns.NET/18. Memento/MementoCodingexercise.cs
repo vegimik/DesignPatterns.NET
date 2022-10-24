@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static DesignPatterns.NET._18._Memento.MementoCodingexercise;
+using static DesignPatterns.NET._18._Memento.MementoCodingExercise;
 
 namespace DesignPatterns.NET._18._Memento
 {
-    internal class MementoCodingexercise
+    internal class MementoCodingExercise
     {
         public class Token
         {
