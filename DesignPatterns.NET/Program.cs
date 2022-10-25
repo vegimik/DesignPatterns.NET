@@ -7,6 +7,7 @@ using DesignPatterns.NET._16._Iterator;
 using DesignPatterns.NET._17._Mediator;
 using DesignPatterns.NET._18._Memento;
 using DesignPatterns.NET._19._Null_Object;
+using DesignPatterns.NET._20._Observer;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace DesignPatterns.NET
     {
         public static void Main(string[] args)
         {
+            new _3_ObserverViaSpecialInerface().Drive();
 
 
         }
