@@ -22,7 +22,7 @@ namespace DesignPatterns.NET
     {
         public static void Main(string[] args)
         {
-            new _3_ObserverViaSpecialInerface().Drive();
+            _6_PropertyDependecies.Drive();
 
 
         }
