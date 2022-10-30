@@ -23,12 +23,9 @@ namespace DesignPatterns.NET
     {
         public static void Main(string[] args)
         {
-            StateCodingExercise.Drive();
 
 
         }
-
-
 
     }
 }
