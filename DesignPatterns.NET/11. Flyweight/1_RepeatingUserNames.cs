@@ -1,4 +1,4 @@
-﻿using JetBrains.dotMemoryUnit;
+using JetBrains.dotMemoryUnit;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -21,30 +21,49 @@ namespace DesignPatterns.NET._11._Flyweight
         }
         public class User2
         {
+            // Fixed: Use Dictionary for O(1) lookups instead of List with O(n) IndexOf
+            public static Dictionary<string, int> stringToIndex = new Dictionary<string, int>();
             public static List<string> strings = new List<string>();
+            private static readonly object lockObject = new object(); // Fixed: Add thread safety
             private int[] names;
 
-            public string fullName { get; set; }
+            // Fixed: Remove unused property to avoid confusion
+            // public string fullName { get; set; } - This was never used
 
             public User2(string fullname)
             {
                 int getOrAdd(string s)
                 {
-                    int indx = strings.IndexOf(s);
-                    if (indx != -1)
+                    // Fixed: Add thread safety and use Dictionary for better performance
+                    lock (lockObject)
                     {
-                        return indx;
-                    }
-                    else
-                    {
-                        strings.Add(s);
-                        return strings.Count - 1;
+                        if (stringToIndex.TryGetValue(s, out int index))
+                        {
+                            return index;
+                        }
+                        else
+                        {
+                            int newIndex = strings.Count;
+                            strings.Add(s);
+                            stringToIndex[s] = newIndex;
+                            return newIndex;
+                        }
                     }
                 }
                 names = fullname.Split(' ').Select(getOrAdd).ToArray();
             }
 
             public string FullName => string.Join(" ", names.Select(i => strings[i]));
+            
+            // Fixed: Add method to clear static collections to prevent memory leaks
+            public static void ClearCache()
+            {
+                lock (lockObject)
+                {
+                    stringToIndex.Clear();
+                    strings.Clear();
+                }
+            }
         }
 
         public static void Drive()
@@ -55,6 +74,13 @@ namespace DesignPatterns.NET._11._Flyweight
         [TestFixture]
         public class _1_RepeatingUserNames_TestSuit
         {
+            [SetUp]
+            public void Setup()
+            {
+                // Fixed: Clear cache before each test to prevent memory leaks
+                User2.ClearCache();
+            }
+
             [Test]
             public void TestUser()
             {

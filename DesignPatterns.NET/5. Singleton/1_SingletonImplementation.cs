@@ -1,4 +1,4 @@
-﻿using MoreLinq;
+using MoreLinq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,9 @@ namespace DesignPatterns.NET._5._Singleton
 {
     internal class _1_SingletonImplementation
     {
-        public static string fileName = @"C:\Users\Twin\OneDrive\Desktop\UdemyCourses\4. Design Patterns C# and .Net\DesignPatterns.NET\DesignPatterns.NET\5. Singleton\capitals.txt";
+        // Fixed: Use relative path instead of hard-coded absolute path
+        public static string fileName = Path.Combine("5. Singleton", "capitals.txt");
+        
         public interface IDatabase
         {
             int GetPopulation(string name);
@@ -26,16 +28,38 @@ namespace DesignPatterns.NET._5._Singleton
             {
                 Console.WriteLine("Initilaizing database");
 
-                capitals = File.ReadAllLines(fileName)
-                    .Batch(2)
-                    .ToDictionary(
-                    list => list.ElementAt(0).Trim(),
-                    list => int.Parse(list.ElementAt(1).Trim()));
+                // Fixed: Add proper error handling for file operations
+                try
+                {
+                    if (File.Exists(fileName))
+                    {
+                        capitals = File.ReadAllLines(fileName)
+                            .Batch(2)
+                            .ToDictionary(
+                            list => list.ElementAt(0).Trim(),
+                            list => int.Parse(list.ElementAt(1).Trim()));
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Warning: File {fileName} not found. Using empty database.");
+                        capitals = new Dictionary<string, int>();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error loading database: {ex.Message}");
+                    capitals = new Dictionary<string, int>();
+                }
             }
 
             public int GetPopulation(string name)
             {
-                return capitals[name];
+                // Fixed: Add null check and proper error handling
+                if (capitals.TryGetValue(name, out int population))
+                {
+                    return population;
+                }
+                throw new KeyNotFoundException($"City '{name}' not found in database.");
             }
         }
 
@@ -43,10 +67,16 @@ namespace DesignPatterns.NET._5._Singleton
         {
             var db = SignletonDAtabase.Instance;
             var city = "Tokyo";
-            Console.WriteLine($"{city} has population {db.GetPopulation(city)}");
-
-
-
+            
+            // Fixed: Add proper error handling for GetPopulation call
+            try
+            {
+                Console.WriteLine($"{city} has population {db.GetPopulation(city)}");
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
